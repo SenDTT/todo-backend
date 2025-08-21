@@ -8,7 +8,6 @@ A simple REST API for managing todos using **Express**, **TypeScript**, and **Pr
 
 - Node.js **>= 18**
 - npm (comes with Node.js)
-- **Docker Desktop** (recommended for MySQL): https://www.docker.com/products/docker-desktop
 - A database:
   - **MySQL 8.x** (recommended)
 
