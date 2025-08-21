@@ -8,9 +8,9 @@ A simple REST API for managing todos using **Express**, **TypeScript**, and **Pr
 
 - Node.js **>= 18**
 - npm (comes with Node.js)
+- **Docker Desktop** (recommended for MySQL): https://www.docker.com/products/docker-desktop
 - A database:
-  - **SQLite** (default, no setup required), or
-  - **PostgreSQL** if you prefer
+  - **MySQL 8.x** (recommended)
 
 ---
 
@@ -32,15 +32,11 @@ A simple REST API for managing todos using **Express**, **TypeScript**, and **Pr
 3. **Configure environment**
    Create a `.env` file in the project root:
 
-   ```env
-   # SQLite (default)
-   DATABASE_URL="file:./dev.db"
-   PORT=4000
-   NODE_ENV=development
-
-   # Or for PostgreSQL
-   # DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/todos?schema=public"
+   ```bash
+   cp .example.env .env
    ```
+   
+   Open .env and update with your real credentials:
 
 4. **Initialize the database**
 
