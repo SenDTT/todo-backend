@@ -76,26 +76,36 @@ http://localhost:4000
 
 ### Get all todos
 
+```bash
 curl -i http://localhost:4000/todos
+```
 
 ### Add new todo
 
+```bash
 curl -i -X POST http://localhost:4000/todos \
  -H "Content-Type: application/json" \
  -d '{"title":"New Todo", "color":"#FF0000"}'
+```
 
 ### Update todo
 
+```bash
 curl -i -X PATCH http://localhost:4000/todos/1 \
  -H "Content-Type: application/json" \
  -d '{"title":"Updated Todo", "color":"#00FF00"}'
+```
 
 ### Delete todo
 
+```bash
 curl -i -X DELETE http://localhost:4000/todos/1
+```
 
 ### Complete todo
 
+```bash
 curl -i -X PATCH http://localhost:4000/todos/2/complete \
  -H "Content-Type: application/json" \
  -d '{"completed":true}'
+```
