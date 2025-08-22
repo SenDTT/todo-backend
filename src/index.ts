@@ -9,19 +9,60 @@ app.use(cors());
 app.use(express.json());
 
 // Get all todos
-app.get("/todos", async (_req, res) => {
+// GET /todos?limit=10&page=2
+app.get("/todos", async (req, res) => {
   try {
-    const todos = await prisma.todo.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+    const limitRaw = (req.query.limit as string) ?? "10";
+    const pageRaw  = (req.query.page as string) ?? "1";
+
+    const limit = Math.min(Math.max(parseInt(limitRaw, 10) || 10, 1), 100);
+    const page  = Math.max(parseInt(pageRaw, 10) || 1, 1);
+    const skip  = (page - 1) * limit;
+
+    const [total, todos] = await Promise.all([
+      prisma.todo.count(),
+      prisma.todo.findMany({
+        orderBy: { createdAt: "desc" },
+        skip,
+        take: limit,
+      }),
+    ]);
+
+    const totalPages = Math.max(Math.ceil(total / limit), 1);
+
     res.json({
       success: true,
       data: todos,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages,
+        hasPrevPage: page > 1,
+        hasNextPage: page < totalPages,
+        prevPage: page > 1 ? page - 1 : null,
+        nextPage: page < totalPages ? page + 1 : null,
+      },
     });
   } catch (error) {
-    res.status(500).json({
+    console.error(error);
+    res.status(500).json({ success: false, error: "Failed to retrieve todos" });
+  }
+});
+
+// get a todo
+app.get("/todos/:id", async (req, res) => {
+  const { id } = req.params;
+  const todo = await prisma.todo.findUnique({ where: { id: Number(id) } });
+  if (todo) {
+    res.json({
+      success: true,
+      data: todo,
+    });
+  } else {
+    res.status(404).json({
       success: false,
-      error: "Failed to retrieve todos",
+      error: "Todo not found",
     });
   }
 });

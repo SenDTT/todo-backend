@@ -34,7 +34,7 @@ A simple REST API for managing todos using **Express**, **TypeScript**, and **Pr
    ```bash
    cp .example.env .env
    ```
-   
+
    Open .env and update with your real credentials:
 
 4. **Initialize the database**
@@ -65,6 +65,7 @@ http://localhost:4000
 ## Available Endpoints
 
 - `GET /todos` → Get all todos
+- `GET /todos/:id` → Get a todo
 - `POST /todos` → Create a new todo (title, color)
 - `PATCH /todos/:id` → Update a todo (title, color)
 - `PATCH /todos/:id/complete` → Completed/uncompleted a todo (completed)
@@ -78,6 +79,12 @@ http://localhost:4000
 
 ```bash
 curl -i http://localhost:4000/todos
+```
+
+### Get a todo
+
+```bash
+curl -i http://localhost:4000/todos/1
 ```
 
 ### Add new todo
